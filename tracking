@@ -1,0 +1,72 @@
+// App.js
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [expenses, setExpenses] = useState([]);
+  const [text, setText] = useState('');
+  const [amount, setAmount] = useState(0);
+
+  const addExpense = e => {
+    e.preventDefault();
+    if (!text || !amount) return;
+    setExpenses([...expenses, { text, amount: +amount }]);
+    setText('');
+    setAmount(0);
+  };
+
+  return (
+    <div className="App">
+      <h1>Expense Tracker</h1>
+      <form onSubmit={addExpense}>
+        <input
+          type="text"
+          placeholder="Enter expense"
+          value={text}
+          onChange={e => setText(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Enter amount"
+          value={amount}
+          onChange={e => setAmount(e.target.value)}
+        />
+        <button type="submit">Add Expense</button>
+      </form>
+      <div>
+        <h2>Expenses</h2>
+        <ul>
+          {expenses.map((expense, index) => (
+            <li key={index}>
+              {expense.text} - ${expense.amount}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+/* App.css */
+.App {
+  text-align: center;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+input {
+  margin-right: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
